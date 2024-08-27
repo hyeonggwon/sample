@@ -52,7 +52,7 @@ public class BootService extends Service {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void startApp() {
         if (Settings.canDrawOverlays(this)) {
-            Intent intent = new Intent(this, SplashActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

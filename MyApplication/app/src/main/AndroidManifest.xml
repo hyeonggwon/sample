@@ -17,14 +17,9 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.App.Starting"></activity>
-        <activity
-            android:name=".SplashActivity"
-            android:exported="true"
-            android:theme="@drawable/ic_launcher_foreground">
+            android:theme="@style/Theme.App.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
