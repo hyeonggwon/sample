@@ -32,7 +32,13 @@ android {
     }
 
     androidResources {
-        noCompress += ""
+        noCompress += "bin"
+        noCompress += "dat"
+        noCompress += "pak"
+        additionalParameters += "--emit-ids"
+        additionalParameters += projectDir.path
+        additionalParameters += "--stable-ids"
+        additionalParameters += projectDir.path + "/libs/stableIds.txt"
     }
 }
 

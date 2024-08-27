@@ -2,7 +2,9 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -34,17 +36,21 @@ public class MainActivity extends AppCompatActivity {
 
     private WebView mWebView;
     private ImageView mSplashImage;
-    private MyViewModel mViewModel;
     private JSONObject jsonObject;
     private String TAG = "Matthew";
-    //private String jsonFilePath = "/sdcard/Android/data/com.example.myapplication/files/config.json";
     private String jsonFilePath;
-    //private String URL = "https://ogame.upluscar.co.kr/ccnctest/game/#/";
     private String URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!Settings.canDrawOverlays(this)) {
+            Intent intent = new Intent(
+                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + getPackageName()));
+            startActivity(intent);
+        }
+
         SplashScreen.installSplashScreen(MainActivity.this);
         setContentView(R.layout.activity_main);
 
@@ -65,9 +71,6 @@ public class MainActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-
-        //mViewModel = new ViewModelProvider(this).get(MyViewModel.class);
-
         mSplashImage = findViewById(R.id.splashImage);
         mWebView = findViewById(R.id.wvLayout);
         mWebView.getSettings().setJavaScriptEnabled(true);
@@ -78,32 +81,17 @@ public class MainActivity extends AppCompatActivity {
         mWebView.getSettings().setUseWideViewPort(false);
         mWebView.getSettings().setLoadWithOverviewMode(true);
         mWebView.setInitialScale(100);
-
-        /*
-        mWebView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                if (mViewModel.isReady()) {
-                    mWebView.getViewTreeObserver().removeOnPreDrawListener(this);
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        });
-         */
-
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
-                Log.i(TAG, "onPageFinished");
-                if (url.equals(URL)) {
-                    Log.i(TAG, "LOAD Done");
+                Log.i(TAG, "[onPageFinished] URL : " + URL + ", paremeter url : " + url);
+                if (url.equals(URL) || url.equals(URL + "/")) {
+                    Log.i(TAG, "[LOAD Done] URL : " + URL + ", paremeter url : " + url);
                     try {
                         //mViewModel.setReady(true);
                         hideSplash();
                     } catch (Exception e) {
-                        Log.e(TAG, "LOAD Error");
+                        Log.e(TAG, "[LOAD Error] URL : " + URL + ", paremeter url : " + url);
                     }
                 }
             }
