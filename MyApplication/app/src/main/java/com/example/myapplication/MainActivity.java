@@ -107,6 +107,26 @@ public class MainActivity extends AppCompatActivity {
                 hideSplash();
             }
         });
+
+        // ConnectivityManager 가져오기
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // NetworkCallback 설정
+        NetworkRequest networkRequest = new NetworkRequest.Builder()
+                .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                .build();
+
+        connectivityManager.registerNetworkCallback(networkRequest, new ConnectivityManager.NetworkCallback() {
+            @Override
+            public void onAvailable(@NonNull Network network) {
+                // 네트워크 연결됨
+                if (!isNetworkConnected) {
+                    isNetworkConnected = true;
+                    performActionOnNetworkAvailable();
+                }
+            }
+        });
     }
 
     private void performActionOnNetworkAvailable() {
