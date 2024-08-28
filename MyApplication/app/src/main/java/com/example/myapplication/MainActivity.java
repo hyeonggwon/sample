@@ -2,6 +2,10 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkRequest;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private String TAG = "Matthew";
     private String jsonFilePath;
     private String URL;
+    private boolean isNetworkConnected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
         mSplashImage = findViewById(R.id.splashImage);
         mWebView = findViewById(R.id.wvLayout);
         mWebView.getSettings().setJavaScriptEnabled(true);
@@ -101,7 +107,11 @@ public class MainActivity extends AppCompatActivity {
                 hideSplash();
             }
         });
-        mWebView.loadUrl(URL);
+    }
+
+    private void performActionOnNetworkAvailable() {
+        // 네트워크 연결 시 수행할 작업
+        runOnUiThread(() -> mWebView.loadUrl(URL));
     }
 
     private void showSplash() {
