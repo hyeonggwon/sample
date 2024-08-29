@@ -9,6 +9,7 @@ import android.net.NetworkRequest;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -82,9 +83,9 @@ public class MainActivity extends AppCompatActivity {
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setUserAgentString("Mozilla/5.0 (X11; ccNC; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.6261.120 Safari/537.36");
         mWebView.getSettings().setDomStorageEnabled(true);
-        mWebView.getSettings().setSupportZoom(true);
-        mWebView.getSettings().setBuiltInZoomControls(true);
-        mWebView.getSettings().setUseWideViewPort(false);
+//        mWebView.getSettings().setSupportZoom(true);
+//        mWebView.getSettings().setBuiltInZoomControls(true);
+//        mWebView.getSettings().setUseWideViewPort(false);
         mWebView.getSettings().setLoadWithOverviewMode(true);
         mWebView.setInitialScale(100);
         mWebView.setWebViewClient(new WebViewClient() {
@@ -210,5 +211,16 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return null;
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mWebView.canGoBack()) {
+                mWebView.goBack();
+                return true;
+            }
+        }
+        return super.onKeyUp(keyCode, event);
     }
 }
