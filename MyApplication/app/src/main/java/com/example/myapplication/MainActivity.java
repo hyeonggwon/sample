@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private WebView mWebView;
     private ImageView mSplashImage;
     private JSONObject jsonObject;
-    private String TAG = "Matthew";
+    private String TAG = "MainActivity";
     private String jsonFilePath;
     private String URL;
     private boolean isNetworkConnected = false;
@@ -83,9 +83,6 @@ public class MainActivity extends AppCompatActivity {
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setUserAgentString("Mozilla/5.0 (X11; ccNC; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.6261.120 Safari/537.36");
         mWebView.getSettings().setDomStorageEnabled(true);
-//        mWebView.getSettings().setSupportZoom(true);
-//        mWebView.getSettings().setBuiltInZoomControls(true);
-//        mWebView.getSettings().setUseWideViewPort(false);
         mWebView.getSettings().setLoadWithOverviewMode(true);
         mWebView.setInitialScale(100);
         mWebView.setWebViewClient(new WebViewClient() {
